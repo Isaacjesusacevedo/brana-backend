@@ -6,13 +6,17 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// ─── Puerto dinámico para Railway ─────────────────────────────
+builder.WebHost.UseUrls(
+    $"http://0.0.0.0:{Environment.GetEnvironmentVariable("PORT") ?? "5000"}"
+);
+
 // ─── Servicios ────────────────────────────────────────────────
-// DESPUÉS
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-        options.JsonSerializerOptions.DefaultIgnoreCondition = 
+        options.JsonSerializerOptions.DefaultIgnoreCondition =
             System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 
@@ -23,7 +27,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Servicios del negocio
 builder.Services.AddApplicationServices();
 
-// CORS para Vue dev server
+// CORS
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("VueDevServer", policy =>
@@ -32,7 +36,8 @@ builder.Services.AddCors(options =>
             .WithOrigins(
                 "http://localhost:5173",
                 "http://localhost:3000",
-                "http://localhost:4173"
+                "http://localhost:4173",
+                "https://transcendent-torrone-b7c5f8.netlify.app"
             )
             .AllowAnyHeader()
             .AllowAnyMethod()
@@ -63,7 +68,6 @@ using (var scope = app.Services.CreateScope())
     await DbSeeder.SeedAsync(db);
 }
 
-// ✅ Swagger siempre activo (sin condición de entorno)
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
@@ -73,7 +77,6 @@ app.UseSwaggerUI(c =>
 
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseCors("VueDevServer");
-// app.UseHttpsRedirection(); // ✅ Comentado para evitar warning de HTTPS
 app.UseAuthorization();
 app.MapControllers();
 
