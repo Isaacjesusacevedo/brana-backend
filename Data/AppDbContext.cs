@@ -19,8 +19,8 @@ public class AppDbContext : DbContext
         modelBuilder.Entity<Product>(e =>
         {
             e.HasKey(p => p.Id);
-            e.Property(p => p.Precio).HasColumnType("decimal(10,2)");
-            e.Property(p => p.PrecioAnterior).HasColumnType("decimal(10,2)");
+            e.Property(p => p.Precio).HasColumnType("numeric(10,2)");
+            e.Property(p => p.PrecioAnterior).HasColumnType("numeric(10,2)");
             e.HasOne(p => p.Categoria).WithMany(c => c.Productos)
                 .HasForeignKey(p => p.CategoriaId).OnDelete(DeleteBehavior.Restrict);
             e.HasMany(p => p.Imagenes).WithOne(i => i.Producto)

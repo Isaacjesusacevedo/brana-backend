@@ -20,9 +20,16 @@ builder.Services.AddControllers()
             System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
     });
 
-// SQLite + EF Core
+// PostgreSQL + EF Core
+// En Railway, DATABASE_URL tiene formato URI: postgres://user:pass@host:port/db
+// Npgsql 6+ acepta tanto URI como la cadena ADO.NET estándar directamente.
+var connectionString =
+    Environment.GetEnvironmentVariable("DATABASE_URL")
+    ?? builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("No se encontró una cadena de conexión válida.");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 // Servicios del negocio
 builder.Services.AddApplicationServices();

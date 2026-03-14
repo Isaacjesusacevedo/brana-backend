@@ -1,12 +1,13 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace Backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,13 +16,13 @@ namespace Backend.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Slug = table.Column<string>(type: "TEXT", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
-                    Icono = table.Column<string>(type: "TEXT", nullable: false),
-                    Ruta = table.Column<string>(type: "TEXT", nullable: true)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Slug = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Descripcion = table.Column<string>(type: "text", nullable: false),
+                    Icono = table.Column<string>(type: "text", nullable: false),
+                    Ruta = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,20 +33,20 @@ namespace Backend.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "TEXT", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", nullable: true),
-                    Titulo = table.Column<string>(type: "TEXT", nullable: true),
-                    Descripcion = table.Column<string>(type: "TEXT", nullable: false),
-                    Precio = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    PrecioAnterior = table.Column<decimal>(type: "decimal(10,2)", nullable: true),
-                    Badge = table.Column<string>(type: "TEXT", nullable: true),
-                    Size = table.Column<string>(type: "TEXT", nullable: true),
-                    Nuevo = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Stock = table.Column<int>(type: "INTEGER", nullable: true),
-                    TallasJson = table.Column<string>(type: "TEXT", nullable: true),
-                    CaracteristicasJson = table.Column<string>(type: "TEXT", nullable: true),
-                    Ruta = table.Column<string>(type: "TEXT", nullable: true),
-                    CategoriaId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: true),
+                    Titulo = table.Column<string>(type: "text", nullable: true),
+                    Descripcion = table.Column<string>(type: "text", nullable: false),
+                    Precio = table.Column<decimal>(type: "numeric(10,2)", nullable: true),
+                    PrecioAnterior = table.Column<decimal>(type: "numeric(10,2)", nullable: true),
+                    Badge = table.Column<string>(type: "text", nullable: true),
+                    Size = table.Column<string>(type: "text", nullable: true),
+                    Nuevo = table.Column<bool>(type: "boolean", nullable: false),
+                    Stock = table.Column<int>(type: "integer", nullable: true),
+                    TallasJson = table.Column<string>(type: "text", nullable: true),
+                    CaracteristicasJson = table.Column<string>(type: "text", nullable: true),
+                    Ruta = table.Column<string>(type: "text", nullable: true),
+                    CategoriaId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,17 +63,17 @@ namespace Backend.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", nullable: false),
-                    Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Telefono = table.Column<string>(type: "TEXT", nullable: false),
-                    NotasAdicionales = table.Column<string>(type: "TEXT", nullable: true),
-                    FechaPedido = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Estado = table.Column<string>(type: "TEXT", nullable: false),
-                    ProductoId = table.Column<string>(type: "TEXT", nullable: false),
-                    Talla = table.Column<string>(type: "TEXT", nullable: false),
-                    Color = table.Column<string>(type: "TEXT", nullable: false),
-                    Cantidad = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    Telefono = table.Column<string>(type: "text", nullable: false),
+                    NotasAdicionales = table.Column<string>(type: "text", nullable: true),
+                    FechaPedido = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Estado = table.Column<string>(type: "text", nullable: false),
+                    ProductoId = table.Column<string>(type: "text", nullable: false),
+                    Talla = table.Column<string>(type: "text", nullable: false),
+                    Color = table.Column<string>(type: "text", nullable: false),
+                    Cantidad = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -89,11 +90,11 @@ namespace Backend.Migrations
                 name: "ProductColors",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Hex = table.Column<string>(type: "TEXT", nullable: false),
-                    Nombre = table.Column<string>(type: "TEXT", nullable: true),
-                    ProductoId = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Hex = table.Column<string>(type: "text", nullable: false),
+                    Nombre = table.Column<string>(type: "text", nullable: true),
+                    ProductoId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,12 +111,12 @@ namespace Backend.Migrations
                 name: "ProductImages",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Url = table.Column<string>(type: "TEXT", nullable: false),
-                    EsPrincipal = table.Column<bool>(type: "INTEGER", nullable: false),
-                    Orden = table.Column<int>(type: "INTEGER", nullable: false),
-                    ProductoId = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Url = table.Column<string>(type: "text", nullable: false),
+                    EsPrincipal = table.Column<bool>(type: "boolean", nullable: false),
+                    Orden = table.Column<int>(type: "integer", nullable: false),
+                    ProductoId = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
