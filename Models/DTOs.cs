@@ -181,6 +181,9 @@ public class ProductUpdateDto : ProductCreateDto
     public string Id { get; set; } = string.Empty;
 }
 
+// ─── Cloudinary Upload ────────────────────────────────────────────────────────
+public record UploadResultDto(string Url, string PublicId, int Width, int Height, long Bytes);
+
 // ─── Query params ─────────────────────────────────────────────────────────────
 public class ProductQueryParams
 {

@@ -9,6 +9,7 @@ public static class ServiceExtensions
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IOrderService, OrderService>();
+        services.AddScoped<ICloudinaryService, CloudinaryService>();
 
         return services;
     }
