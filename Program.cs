@@ -84,7 +84,8 @@ var corsOrigins = new List<string>
     "http://localhost:5177",
     "http://localhost:3000",
     "http://localhost:4173",
-    "https://transcendent-torrone-b7c5f8.netlify.app"
+    "https://transcendent-torrone-b7c5f8.netlify.app",
+    "https://brana-backend-c0am.onrender.com"
 };
 
 if (!string.IsNullOrWhiteSpace(frontendUrl))
